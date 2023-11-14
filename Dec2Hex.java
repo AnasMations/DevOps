@@ -1,5 +1,6 @@
 import java.util.logging.Logger;
 
+
 public class Dec2Hex {
 
     private static final Logger log = Logger.getLogger(Dec2Hex.class.getName());
