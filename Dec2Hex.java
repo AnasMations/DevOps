@@ -9,7 +9,7 @@ class Dec2Hex
     {
 	if(args.length==0)
 	{
-		System.err.println("Error: no input provided!");
+		System.out.println("Error: no input provided!");
 		System.exit(1);
 		return;
 	}
@@ -21,7 +21,7 @@ class Dec2Hex
         } 
 	catch (NumberFormatException e) 
 	{
-            System.err.println("Error: input provided is not integer!");
+            System.out.println("Error: input provided is not integer!");
             System.exit(1);
             return;
         }
