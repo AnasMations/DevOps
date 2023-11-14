@@ -26,7 +26,7 @@ class Dec2Hex
             num= num/16;
         }
 
-        System.out.println("Hexadecimal representation is: " + hexadecimal);
+        System.out.println("Converted Hexadecimal representation is: " + hexadecimal);
 
     }
 }
