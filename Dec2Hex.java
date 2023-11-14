@@ -14,8 +14,7 @@ public class Dec2Hex {
         }
 
         try {
-            int decimalInput;
-            decimalInput = Integer.parseInt(args[0]);
+            int decimalInput = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
             log.severe("Error: input provided is not an integer!");
             System.exit(1);
@@ -27,16 +26,19 @@ public class Dec2Hex {
         int rem;
         int num;
         num = Arg1;
-        String hexadecimal = "";
-        log.info("Converting the Decimal Value " + num + " to Hex...");
+        log.info("Converting the Decimal Value {} to Hex...", num);
+
+	StringBuilder hexadecimalBuilder = new StringBuilder();
 
         while (num != 0) {
             rem = num % 16;
-            hexadecimal = ch[rem] + hexadecimal;
+	    hexadecimalBuilder.insert(0, ch[rem]);
             num = num / 16;
         }
 
-        log.info("Converted Hexadecimal representation is: " + hexadecimal);
+	string hexadecimal = hexadecimalBuilder.toString();
+
+        log.info("Converted Hexadecimal representation is: {}", hexadecimal);
     }
 }
 
