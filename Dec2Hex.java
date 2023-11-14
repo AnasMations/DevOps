@@ -36,7 +36,7 @@ public class Dec2Hex {
             num = num / 16;
         }
 
-	string hexadecimal = hexadecimalBuilder.toString();
+	String hexadecimal = hexadecimalBuilder.toString();
 
         log.info("Converted Hexadecimal representation is: {}", hexadecimal);
     }
