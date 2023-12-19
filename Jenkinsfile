@@ -4,7 +4,11 @@ pipeline {
         jdk 'OpenJDK8'
         maven 'Maven3'
     }
-
+    
+    environment {
+        JAVA_HOME = "${tool 'OpenJDK8'}"
+    }
+    
     stages {
         
         stage('SCM') {
