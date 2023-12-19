@@ -7,6 +7,7 @@ pipeline {
     
     environment {
         JAVA_HOME = "${tool 'OpenJDK8'}"
+        PATH = "${JAVA_HOME}/bin:${env.PATH}"
     }
     
     stages {
