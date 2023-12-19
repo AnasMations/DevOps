@@ -18,9 +18,13 @@ pipeline {
             }
         }
         
-         stage('Maven Build') {
+        stage('Maven Build') {
             steps {
-                sh "mvn clean install"
+                script {
+                    // Ensure that Maven is using the correct JAVA_HOME
+                    def mvnHome = tool 'Maven3'
+                    sh "${mvnHome}/bin/mvn clean install"
+                }
             }
         }
         
