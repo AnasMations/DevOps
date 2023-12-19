@@ -1,7 +1,24 @@
 pipeline {
     agent any
+    tools{
+        jdk 'OpenJDK8'
+        maven 'Maven3'
+    }
 
     stages {
+        
+        stage('SCM') {
+            steps {
+               git branch: 'main', changelog: false, poll: false, url: 'https://github.com/anasmations/DevOps.git'
+            }
+        }
+        
+         stage('Maven Build') {
+            steps {
+                sh "mvn clean install"
+            }
+        }
+        
         stage('Build Image') {
             steps {
                 script {
