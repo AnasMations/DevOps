@@ -36,32 +36,30 @@ pipeline {
             }
         }
 
-        stage('Test Container') {
-            steps {
-                script {
-                    docker.image('anasmations/nodejs-web-app:latest').inside {
-                        sh 'echo "Test Container success!"'
-                    }
-                }
-            }
-        }
 
         stage('Push to DockerHub') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
-                        docker.image('anasmations/nodejs-web-app:latest').push()
+                    withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
+                    sh 'docker login -u anasmations -p ${dockerhubpwd}'
+
                     }
+                    sh 'docker push anasmations/nodejs-web-app:latest'
                 }
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
-                script {
-                    // Use kubectl commands to deploy to Kubernetes
-                    sh 'kubectl apply -f kubernetes-deployment.yaml'
+                  script{
+                    withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
+                    sh 'docker login -u anasmations -p ${dockerhubpwd}'
+
+                    }
+                    sh 'docker push anasmations/nodejs-web-app:latest'
+
                 }
+                script{kubernetesDeploy (configs: 'deploymentservice.yml',  kubeconfigId: 'k8sconfigpwd')}
             }
         }
     }
