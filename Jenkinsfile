@@ -17,27 +17,22 @@ pipeline {
             }
         }
         
-        stage('Maven Build') {
-            steps {
-                script {
-                    def mvnHome = tool 'Maven3'
-                    sh "${mvnHome}/bin/mvn clean install"
-                }
+    stage('Maven Build') {
+        steps {
+            script {
+                def mvnHome = tool 'Maven3'
+                sh "${mvnHome}/bin/mvn clean install"
             }
         }
+    }
         
-        stage('Build Image') {
-            steps {
-                script {
-                    // Build Docker image
-                    script {
-                        docker.withRegistry('https://registry.hub.docker.com/v2/', 'anasmations') {
-                            def customImage = docker.build("anasmations/nodejs-web-app:latest")
-                        }
-                    }
-                }
+    stage('Build Image') {
+        steps{
+            script{
+                sh 'docker build -t anasmations/nodejs-web-app:latest .'
             }
         }
+    }
 
         stage('Push to DockerHub') {
             steps {
