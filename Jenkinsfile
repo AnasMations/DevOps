@@ -31,7 +31,7 @@ pipeline {
                 script {
                     // Build Docker image
                     script {
-                        docker.withRegistry('https://registry.example.com', 'dockerhubCredentials') {
+                        docker.withRegistry('https://registry.hub.docker.com/v2/', 'anasmations') {
                             def customImage = docker.build("anasmations/nodejs-web-app:latest")
                         }
                     }
