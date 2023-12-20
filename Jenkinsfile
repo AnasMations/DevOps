@@ -34,29 +34,25 @@ pipeline {
         }
     }
 
-        stage('Push to DockerHub') {
-            steps {
-                script {
-                    // Push Docker image to DockerHub
-                    withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
-                        sh 'docker login -u anasmations -p ${dockerhubpwd}'
-                    }
-                    sh 'docker push anasmations/nodejs-web-app:latest'
+    stage('Push to DockerHub') {
+        steps {
+            script {
+                // Push Docker image to DockerHub
+                withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
+                    sh 'docker login -u anasmations -p ${dockerhubpwd}'
                 }
+                sh 'docker push anasmations/nodejs-web-app:latest'
             }
         }
+    }
 
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Push Docker image to DockerHub (if not already pushed)
-                    withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
-                        sh 'docker login -u anasmations -p ${dockerhubpwd}'
-                    }
-                    sh 'docker push anasmations/nodejs-web-app:latest'
-
                     // Deploy to Kubernetes
-                    kubernetesDeploy(configs: 'deploymentservice.yml', kubeconfigId: 'k8sconfigpwd')
+                    withKubeConfig([credentialsId: 'k8sconfigpwd', serverUrl: 'https://your-kubernetes-api-server']) {
+                        sh 'kubectl apply -f deploy.yml'
+                    }
                 }
             }
         }

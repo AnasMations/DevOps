@@ -13,7 +13,7 @@ RUN npm install
 COPY . .
 
 # Expose the port on which the app will run on 8080
-EXPOSE 8080
+EXPOSE 8081
 
 # Define environment variable
 ENV HOSTNAME="localhost"
